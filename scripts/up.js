@@ -43,5 +43,5 @@ socket.on("userExists", () => {
 
 socket.on("success", (accessCode) => {
   localStorage.setItem("access_code", accessCode);
-  location.href = "https://krksh.site/chat/";
+  location.href = "https://chat.krksh.site/sign-in";
 });
