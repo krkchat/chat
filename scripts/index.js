@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000");
+const socket = io("https://krkchat.glitch.me");
 let reload = false;
 let accessCode;
 
@@ -29,7 +29,7 @@ setTimeout(() => {
     if (localStorage.getItem("accessCode") !== null) {
       accessCode = localStorage.getItem("accessCode");
     } else {
-      location.href = "http://127.0.0.1:5500/client/sign-in";
+      location.href = "https://chat.krksh.site/client/sign-in";
     }
 
     socket.emit("getSessions", accessCode);
