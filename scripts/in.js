@@ -37,7 +37,7 @@ socket.on("signedIn", (code) => {
   error.style.opacity = "100";
 
   localStorage.setItem("accessCode", code);
-  window.location.href = `https://krksh.site/chat/?username=${userName}`;
+  window.location.href = `https://chat.krksh.site/?username=${userName}`;
 });
 
 username.addEventListener("keydown", (event) => {
