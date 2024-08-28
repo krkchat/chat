@@ -1,18 +1,8 @@
-const socket = io("https://krkchat.glitch.me");
+const socket = io("http://localhost:3000");
 let reload = false;
 let accessCode;
 
 const userName = new URLSearchParams(window.location.search).get("username");
-
-if (userName !== null) {
-  localStorage.setItem("userName", userName);
-}
-
-if (localStorage.getItem("accessCode") !== null) {
-  accessCode = localStorage.getItem("accessCode");
-} else {
-  location.href = "https://krksh.site/chat/sign-in";
-}
 
 let connected = false;
 
@@ -31,22 +21,20 @@ setTimeout(() => {
     document.body.style = "font-family: sans-serif; font-size: 20px";
     document.body.className = "center";
     reload = true;
+  } else {
+    if (userName !== null) {
+      localStorage.setItem("userName", userName);
+    }
+
+    if (localStorage.getItem("accessCode") !== null) {
+      accessCode = localStorage.getItem("accessCode");
+    } else {
+      location.href = "http://127.0.0.1:5500/client/sign-in";
+    }
+
+    socket.emit("getSessions", accessCode);
   }
 }, 1000);
-
-/*function messageServer(content, time) {
-  socket.emit("message", content, time);
-}
-
-socket.on("recieve", (content, time) => {
-  message(false, time, content);
-});
-
-socket.on("recieveImage", (source, MessageTime) => {
-  time = MessageTime;
-  imgSource = source;
-  sendImage(true);
-});*/
 
 socket.on("retutrnData", (data) => {
   localStorage.setItem("account", data);
@@ -56,8 +44,6 @@ socket.on("retutrnData", (data) => {
 function tempInitializeSession(users) {
   socket.emit("TIS", users);
 }
-
-socket.emit("getSessions", accessCode);
 
 socket.on("receiveSessions", (sessions) => {
   sessions.forEach((session) => loadSession(session));
@@ -69,9 +55,7 @@ function requestMessages(id) {
 }
 
 socket.on("receiveMessages", (messages) => {
-  for (let message in messages) {
-    loadMessage(messages[message]);
-  }
+  processMessages(messages);
 });
 
 function sendMessage(message) {
@@ -80,6 +64,5 @@ function sendMessage(message) {
 }
 
 socket.on("requestMessages", (id) => {
-  messageWindow.innerHTML = "";
   requestMessages(id);
 });
