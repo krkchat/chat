@@ -29,7 +29,7 @@ setTimeout(() => {
     if (localStorage.getItem("accessCode") !== null) {
       accessCode = localStorage.getItem("accessCode");
     } else {
-      location.href = "https://chat.krksh.site/client/sign-in";
+      location.href = "https://chat.krksh.site/sign-in";
     }
 
     socket.emit("getSessions", accessCode);
